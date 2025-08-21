@@ -9,6 +9,10 @@ This project is a lightweight, code-only solution for generating well-formatted 
 - Use ReportLab or WeasyPrint for PDF generation
 - Fully automated via CLI or script
 
+## Security
+
+- All controlled via python .env and clickup API keys onloy stored on dev environment.
+
 ## Requirements
 
 - Python 3.8+
