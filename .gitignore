@@ -1,0 +1,44 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+*.env
+
+# VS Code settings
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Packaging
+build/
+dist/
+*.egg-info/
+
+# Test and coverage outputs
+htmlcov/
+.tox/
+.coverage
+coverage.xml
+*.cover
+.pytest_cache/
+nosetests.xml
+
+# Jupyter Notebooks (if used later)
+.ipynb_checkpoints/
+
+# PDF output (optional – comment out if you want to keep them in git)
+output/*.pdf
