@@ -1,6 +1,7 @@
 from reportlab.platypus import Paragraph, Spacer, KeepInFrame
 from clickup_parser import render_quill_ops
 from utils import urlify_text
+import json
 
 def resolve_id(obj: dict) -> str:
     return obj.get("custom_id") or obj.get("id", "")
@@ -28,12 +29,15 @@ def format_people(people_list, styles):
 
 def render_value(field_value, rich_text_ops, task_lookup, styles):
     flows = []
+
+    # ✅ Always try to decode Quill JSON if it's provided as string
     if isinstance(rich_text_ops, str):
         try:
-            import json
-            ops = json.loads(rich_text_ops).get("ops", [])
-            flows.extend(render_quill_ops(ops, task_lookup, lambda l,u: make_button(l,u,styles), styles))
-            return flows
+            parsed = json.loads(rich_text_ops)
+            ops = parsed.get("ops", [])
+            if ops:
+                flows.extend(render_quill_ops(ops, task_lookup, lambda l,u: make_button(l,u,styles), styles))
+                return flows
         except Exception:
             pass
 
