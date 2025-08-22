@@ -19,4 +19,13 @@ def get_styles():
                               borderPadding=(2, 6, 2, 6),
                               spaceAfter=4, spaceBefore=2,
                               alignment=TA_LEFT))
+    styles.add(ParagraphStyle(name='CodeBlock',
+                              fontName='Courier',
+                              fontSize=9, leading=12,
+                              textColor=colors.black,
+                              backColor=colors.HexColor('#f5f5f5'),
+                              borderColor=colors.HexColor('#dddddd'),
+                              borderWidth=0.5,
+                              borderPadding=(6, 8, 6, 8),
+                              spaceAfter=6, spaceBefore=4))
     return styles

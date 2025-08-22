@@ -13,23 +13,39 @@ task_name = data.get("name", "Untitled Task")
 task_url = data.get("url", "")
 custom_fields = data.get("custom_fields", [])
 
-# Build lookup dict for resolving IDs
+# Build lookup dict for resolving IDs (by id and by custom id)
 task_lookup = {}
 def index_people(field):
     if isinstance(field, list):
         for p in field:
             tid = p.get("id")
+            cid = p.get("custom_id") or tid
+            name = p.get("name", "")
             if tid:
-                task_lookup[tid] = (p.get("custom_id") or tid, p.get("name", ""))
+                task_lookup[tid] = (cid, name)
+            if cid:
+                task_lookup[cid] = (cid, name)
     elif isinstance(field, dict):
         tid = field.get("id")
+        cid = field.get("custom_id") or tid
+        name = field.get("name", "")
         if tid:
-            task_lookup[tid] = (field.get("custom_id") or tid, field.get("name", ""))
+            task_lookup[tid] = (cid, name)
+        if cid:
+            task_lookup[cid] = (cid, name)
 
 for cf in custom_fields:
     val = cf.get("value")
     if val:
         index_people(val)
+
+# Also index the current task itself by id and custom id
+this_id = data.get("id")
+this_cust = data.get("custom_id") or this_id
+if this_id:
+    task_lookup[this_id] = (this_cust, task_name)
+if this_cust:
+    task_lookup[this_cust] = (this_cust, task_name)
 
 # File naming
 safe_task_name = safe_filename(task_name)
