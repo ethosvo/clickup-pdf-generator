@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import A4
@@ -16,8 +17,11 @@ task_name = data.get("name", "Untitled Task")
 task_url = data.get("url", "")
 custom_fields = data.get("custom_fields", [])
 
-# Set up PDF doc
-pdf_filename = "clickup_task_output.pdf"
+# Generate a safe filename from task name
+safe_task_name = re.sub(r'[^\w\s-]', '', task_name)
+safe_task_name = re.sub(r'\s+', '_', safe_task_name)
+pdf_filename = f"{safe_task_name}.pdf"
+
 doc = SimpleDocTemplate(
     pdf_filename,
     pagesize=A4,
