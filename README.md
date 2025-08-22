@@ -1,68 +1,30 @@
-# ClickUp PDF Generator
+## ClickUp PDF Generator
 
-This project is a lightweight, code-only solution for generating well-formatted PDFs from ClickUp data (e.g. tasks, comments, custom fields). It is designed to work offline and free of licensing costs, using open-source Python libraries.
+This script extracts data from a ClickUp task (via JSON export) and generates a neatly formatted PDF summary for value exchange reviews.
 
-## Features
+### Current Functionality (v1 milestone)
+- Reads structured task data from `task_data.json`
+- Outputs `clickup_task_output.pdf` with:
+  - Title, task URL, and email/contact fields
+  - All non-empty custom fields
+  - Rich text rendered with basic formatting (bold, italic, links, line breaks)
+  - People fields (e.g. Owner, Contributors, Wellbeing Mentor) listed cleanly by name
+- Ignores irrelevant system metadata (internal IDs, colors, status codes)
+- Automatically overwrites PDF on each run
 
-- Pull data from ClickUp (via JSON or API)
-- Format data into clean, readable PDF reports
-- Use ReportLab or WeasyPrint for PDF generation
-- Fully automated via CLI or script
+### Setup
+1. Install dependencies:
+   ```bash
+   pip install reportlab
+Place your task_data.json file in the project root.
 
-## Security
+Run:
 
-- All controlled via python .env and clickup API keys onloy stored on dev environment.
+bash
+Copy
+Edit
+python generate_pdf.py
+Next Steps (planned)
+Support for badges, highlights, nested lists
 
-## Requirements
-
-- Python 3.8+
-- pip
-
-## Setup
-
-```bash
-git clone https://github.com/ethosvo/clickup-pdf-generator.git
-cd clickup-pdf-generator
-python -m venv venv
-venv\Scripts\activate  # On Windows
-pip install -r requirements.txt
-
-Usage
-python generate_pdf.py data/example.json
-
-License
-
-MIT License
-
-
----
-
-### ✅ `.gitignore` (for Python project on Windows)
-
-```gitignore
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Virtual environment
-venv/
-ENV/
-env/
-.venv/
-*.env
-
-# VS Code settings
-.vscode/
-
-# Distribution / packaging
-build/
-dist/
-*.egg-info/
-
-# Log files
-*.log
-
-# OS-specific
-.DS_Store
-Thumbs.db
+Better support for ClickUp rich formatting: headings, dividers, embedded tasks
