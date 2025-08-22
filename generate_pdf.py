@@ -1,6 +1,6 @@
 import json
 import re
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, KeepInFrame
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.enums import TA_LEFT
@@ -36,10 +36,22 @@ styles.add(ParagraphStyle(name='SectionTitle', fontSize=14, leading=18,
                           textColor=colors.darkblue, alignment=TA_LEFT))
 styles.add(ParagraphStyle(name='NormalText', fontSize=10, leading=14,
                           alignment=TA_LEFT))
+# Softer grey pill-button style with spacing
+styles.add(ParagraphStyle(name='ButtonLink',
+                          fontSize=9,
+                          leading=11,
+                          textColor=colors.black,
+                          backColor=colors.whitesmoke,
+                          borderColor=colors.grey,
+                          borderWidth=0.5,
+                          borderRadius=6,
+                          borderPadding=(2, 6, 2, 6),
+                          spaceAfter=6,
+                          spaceBefore=2,
+                          alignment=TA_LEFT))
 
 elements = []
 
-# Regex to detect plain URLs in text
 URL_RE = re.compile(r'(https?://\S+)', re.IGNORECASE)
 
 def urlify_text(text: str) -> str:
@@ -54,28 +66,39 @@ def urlify_text(text: str) -> str:
 # Header
 elements.append(Paragraph(f"<b>{task_name}</b>", styles['Title']))
 if task_url:
-    elements.append(Paragraph(f"<a href='{task_url}'>{task_url}</a>", styles['Normal']))
+    elements.append(Paragraph(f"<a href='{task_url}'>{task_url}</a>", styles['NormalText']))
 elements.append(Spacer(1, 0.25 * inch))
 
-# Helper function for formatting people fields
+def resolve_id(obj: dict) -> str:
+    """Return custom_id if available, else fallback to id."""
+    return obj.get("custom_id") or obj.get("id", "")
+
+def make_button(label: str, url: str):
+    """Return a pill-style button that shrink-wraps to content."""
+    p = Paragraph(f"<a href='{url}'>{label}</a>", styles['ButtonLink'])
+    # Limit width so it never spans full page
+    return KeepInFrame(maxWidth=3*inch, maxHeight=0, content=[p], hAlign='LEFT')
+
 def format_people(people_list):
-    chunks = []
+    flows = []
     for person in people_list or []:
         name = person.get("name", "").strip()
         url = person.get("url", "").strip()
+        tid = resolve_id(person)
         if not name:
             continue
-        if url:
-            chunks.append(f"• <a href='{url}'>{name}</a>")
+        if url and tid:
+            label = f"[{tid}] {name}"
+            flows.append(make_button(label, url))
+        elif url:
+            flows.append(make_button(name, url))
         else:
-            chunks.append(f"• {name}")
-    return "<br/>".join(chunks) if chunks else ""
+            flows.append(Paragraph(name, styles['NormalText']))
+    return flows
 
 def render_value(field_value, rich_text_ops):
-    """Return a list of Flowables (Paragraphs/Spacers) to render this field."""
     flows = []
-
-    # Handle rich text first
+    # Handle rich text with task mentions
     if isinstance(rich_text_ops, str):
         try:
             ops = json.loads(rich_text_ops).get("ops", [])
@@ -83,18 +106,15 @@ def render_value(field_value, rich_text_ops):
             for op in ops:
                 insert = op.get("insert", "")
                 attrs = op.get("attributes", {}) or {}
-
-                # Handle task mentions
                 if isinstance(insert, dict) and "task_mention" in insert:
                     task_id = insert["task_mention"].get("task_id", "")
+                    custom_id = insert["task_mention"].get("custom_id")
+                    disp_id = custom_id or task_id
                     if task_id:
                         link = f"https://app.clickup.com/t/{task_id}"
-                        insert_text = attrs.get("text", "ClickUp Task")
-                        insert = f"<a href='{link}'>{insert_text}</a>"
-                    else:
-                        insert = ""
-
-                # Normal string inserts
+                        label = f"[{disp_id}] ClickUp Task"
+                        flows.append(make_button(label, link))
+                        continue
                 elif isinstance(insert, str):
                     insert = insert.replace("\n", "<br/>")
                     if attrs.get("bold"):
@@ -105,55 +125,49 @@ def render_value(field_value, rich_text_ops):
                         link = attrs["link"]
                         visible = insert.strip() or link
                         insert = f"<a href='{link}'>{visible}</a>"
-                else:
-                    insert = ""
-
-                text_chunks.append(insert)
-
-            final_text = "".join(text_chunks)
-            flows.append(Paragraph(final_text, styles['NormalText']))
+                    text_chunks.append(insert)
+            if text_chunks:
+                final_text = "".join(text_chunks)
+                flows.append(Paragraph(final_text, styles['NormalText']))
             return flows
         except Exception:
-            pass  # fall through to other handlers if parsing fails
+            pass
 
-    # People arrays
     if isinstance(field_value, list) and field_value and isinstance(field_value[0], dict) and "name" in field_value[0]:
-        flows.append(Paragraph(format_people(field_value), styles['NormalText']))
+        flows.extend(format_people(field_value))
         return flows
 
-    # Single dict (one related item/person)
     if isinstance(field_value, dict) and "name" in field_value:
         name = field_value.get("name", "")
         url = field_value.get("url", "")
-        if url:
-            flows.append(Paragraph(f"<a href='{url}'>{name}</a>", styles['NormalText']))
+        tid = resolve_id(field_value)
+        if url and tid:
+            label = f"[{tid}] {name}"
+            flows.append(make_button(label, url))
+        elif url:
+            flows.append(make_button(name, url))
         else:
             flows.append(Paragraph(name, styles['NormalText']))
         return flows
 
-    # Plain strings
     if isinstance(field_value, str):
         flows.append(Paragraph(urlify_text(field_value.strip()), styles['NormalText']))
         return flows
 
-    # Fallback
     flows.append(Paragraph(str(field_value), styles['NormalText']))
     return flows
 
-# Add all custom fields with values
+# Build PDF
 for field in custom_fields:
     title = field.get("name", "").strip()
     value = field.get("value")
     rich_text_ops = field.get("value_richtext")
-
     if (value in (None, "", [], {})) and not rich_text_ops:
-        continue  # skip empty fields
-
+        continue
     elements.append(Paragraph(title, styles['SectionTitle']))
     for flow in render_value(value, rich_text_ops):
         elements.append(flow)
     elements.append(Spacer(1, 0.2 * inch))
 
-# Write PDF
 doc.build(elements)
 print(f"✅ PDF generated: {pdf_filename}")
