@@ -1,30 +1,84 @@
-## ClickUp PDF Generator
+ClickUp PDF Generator
 
-This script extracts data from a ClickUp task (via JSON export) and generates a neatly formatted PDF summary for value exchange reviews.
+Generate beautifully formatted PDFs from ClickUp task data (`task_data.json`).
 
-### Current Functionality (v1 milestone)
-- Reads structured task data from `task_data.json`
-- Outputs `clickup_task_output.pdf` with:
-  - Title, task URL, and email/contact fields
-  - All non-empty custom fields
-  - Rich text rendered with basic formatting (bold, italic, links, line breaks)
-  - People fields (e.g. Owner, Contributors, Wellbeing Mentor) listed cleanly by name
-- Ignores irrelevant system metadata (internal IDs, colors, status codes)
-- Automatically overwrites PDF on each run
+This project decodes ClickUp JSON (including Quill rich-text fields, hyperlinks, and custom IDs) into a styled PDF report.  
+It renders task references as **button-like links** and maintains proper styling across sections.
 
-### Setup
-1. Install dependencies:
+---
+
+## 🔧 Project Structure
+clickup-pdf-generator/
+│
+├── generate_pdf.py # Main entrypoint
+├── styles.py # ReportLab style definitions
+├── utils.py # Helpers: regex, filenames, URL parsing
+├── clickup_parser.py # Decode Quill ops, bracketed task refs
+├── renderers.py # Button/people/field renderers
+├── task_data.json # Example input (ClickUp export)
+└── README.md
+
+yaml
+Copy
+Edit
+
+---
+
+## 🚀 Usage
+
+1. Export your ClickUp task data as `task_data.json` and place it in this folder.
+2. Run:
+
    ```bash
-   pip install reportlab
-Place your task_data.json file in the project root.
+   python generate_pdf.py
+The script generates a PDF named after the task (safe filename).
 
-Run:
+✨ Features
+Parses Quill Delta rich text (value_richtext) from ClickUp.
+
+Replaces [id] ClickUp Task placeholders with proper [custom_id] Name buttons.
+
+Renders contributors, owners, and linked tasks as pill-shaped buttons.
+
+Maintains consistent ReportLab styles across sections.
+
+Automatically sanitizes filenames for safe saving.
+
+🛠 Requirements
+Python 3.9+
+
+Install dependencies:
 
 bash
 Copy
 Edit
-python generate_pdf.py
-Next Steps (planned)
-Support for badges, highlights, nested lists
+pip install reportlab
+📌 Notes
+generate_pdf.py is the entrypoint — the rest are modularized for clarity.
 
-Better support for ClickUp rich formatting: headings, dividers, embedded tasks
+If you want to customize fonts/colors, edit styles.py.
+
+Future enhancements:
+
+More robust Quill decoding (images, embeds).
+
+Unit tests for parser functions.
+
+🧑‍💻 Development
+Typical workflow with Git:
+
+bash
+Copy
+Edit
+# Pull latest
+git pull origin main
+
+# Work on changes
+code .
+
+# Stage & commit
+git add .
+git commit -m "Refactor: modularize PDF generator (styles, utils, parser, renderers)"
+
+# Push to GitHub
+git push origin main
