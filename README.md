@@ -9,18 +9,14 @@ It renders task references as **button-like links** and maintains proper styling
 
 ## 🔧 Project Structure
 
-```text
-clickup-pdf-generator/
-│
-├── fetch_clickup_task.py   # Fetch task JSON via ClickUp API (with markdown_description)
-├── generate_pdf.py         # Entrypoint for PDF generation
-├── clickup_parser.py       # Decode Quill ops, bracketed task refs
-├── renderers.py            # Render description + fields (rich or plain)
-├── styles.py               # ReportLab style definitions
-├── utils.py                # Helpers: regex, filenames, URL parsing
-├── task_data.json          # Example input (ClickUp export)
-└── README.md
-```
+- `fetch_clickup_task.py` – Fetch task JSON via ClickUp API (with markdown_description)
+- `generate_pdf.py` – Entrypoint for PDF generation
+- `clickup_parser.py` – Decode Quill ops, bracketed task refs
+- `renderers.py` – Render description + fields (rich or plain)
+- `styles.py` – ReportLab style definitions
+- `utils.py` – Helpers: regex, filenames, URL parsing
+- `task_data.json` – Example input (ClickUp export)
+- `README.md`
 
 ## 🚀 Usage
 
