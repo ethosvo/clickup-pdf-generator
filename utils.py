@@ -1,36 +1,31 @@
+# utils.py
 import re
 
-# Matches /t/<id> or /t/<team>/<CUSTOM-ID>
-TASK_ANY_URL_RE = re.compile(r'https://app\.clickup\.com/t/(?:\d+/)?([A-Za-z0-9-]+)')
-URL_RE = re.compile(r'(https?://\S+)', re.IGNORECASE)
-TASK_BRACKET_RE = re.compile(r'\[([a-zA-Z0-9]+)\]\s*ClickUp Task')
+def esc(s: str) -> str:
+    """Escape for ReportLab Paragraph (mini HTML subset)."""
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
-def safe_filename(name: str) -> str:
-    name = re.sub(r'[^\w\s-]', '', name)
-    name = re.sub(r'\s+', '_', name).strip('_')
-    return name or "Untitled"
+def coalesce_list_attr(list_attr):
+    """ClickUp sometimes exports {"list": "bullet"}; normalize to 'bullet'."""
+    if isinstance(list_attr, dict):
+        return list_attr.get('list')
+    return list_attr
 
-def label_for_key(key: str, task_lookup: dict) -> tuple[str, str]:
-    """Return (custom_id, name) for either a task id or a custom id."""
-    if key in task_lookup:
-        return task_lookup[key]
-    # If key looks like a custom id but we only have bare id, fallback to key itself
-    return (key, task_lookup.get(key, ('', ''))[1] if key in task_lookup else '')
+# --- Minimal Markdown fallback for plain text fields ---
+_bold_re = re.compile(r"\*\*(.+?)\*\*")          # **bold**
+_link_re = re.compile(r"\[([^\]]+)\]\(([^)]+)\)") # [text](url)
 
-def urlify_text(text: str, task_lookup: dict, seen_ids: set | None = None) -> str:
-    """Convert bare URLs to anchors, using lookup for ClickUp task labels."""
-    if seen_ids is None:
-        seen_ids = set()
-
-    def repl_url(match):
-        url = match.group(1).rstrip(').,;')
-        m = TASK_ANY_URL_RE.match(url)
-        if m:
-            key = m.group(1)  # could be task id or custom id
-            custom_id, name = label_for_key(key, task_lookup)
-            label = f"[{custom_id}] {name}" if name else f"[{custom_id}] ClickUp Task"
-            seen_ids.add(key)
-            return f"<a href='{url}'>{label}</a>"
-        return f"<a href='{url}'>{url}</a>"
-
-    return URL_RE.sub(repl_url, text or '')
+def md_inline_to_html(s: str) -> str:
+    """
+    Convert a tiny subset of Markdown to the HTML subset ReportLab understands.
+    - **bold** -> <b>…</b>
+    - [text](url) -> <a href="url">text</a>
+    Escape everything else first.
+    """
+    if not s:
+        return ""
+    t = esc(s)
+    # links first so inner **bold** in link text is handled next
+    t = _link_re.sub(lambda m: f'<a href="{esc(m.group(2))}">{esc(m.group(1))}</a>', t)
+    t = _bold_re.sub(lambda m: f"<b>{esc(m.group(1))}</b>", t)
+    return t

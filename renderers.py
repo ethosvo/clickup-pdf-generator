@@ -1,66 +1,222 @@
-from reportlab.platypus import Paragraph, Spacer, KeepInFrame
-from clickup_parser import render_quill_ops
-from utils import urlify_text
+# renderers.py
 import json
+from typing import Any, Dict, List
 
-def resolve_id(obj: dict) -> str:
-    return obj.get("custom_id") or obj.get("id", "")
+from reportlab.platypus import Paragraph, Spacer, ListFlowable, ListItem
 
-def make_button(label: str, url: str, styles):
-    p = Paragraph(f"<a href='{url}'>{label}</a>", styles['ButtonLink'])
-    return KeepInFrame(maxWidth=400, maxHeight=40, content=[p], hAlign='LEFT', mode='shrink')
+from styles import build_styles
+from utils import esc, coalesce_list_attr, md_inline_to_html
 
-def format_people(people_list, styles):
-    flows = []
-    for person in people_list or []:
-        name = person.get("name", "").strip()
-        url = person.get("url", "").strip()
-        tid = resolve_id(person)
-        if not name:
-            continue
-        if url and tid:
-            flows.append(make_button(f"[{tid}] {name}", url, styles))
-        elif url:
-            flows.append(make_button(name, url, styles))
+def _wrap_inline(text: str, attrs: Dict[str, Any]) -> str:
+    """Apply inline formatting supported by ReportLab (<b>, <a>)."""
+    t = esc(text)
+    link = attrs.get('link')
+    bold = bool(attrs.get('bold'))
+    if bold:
+        t = f"<b>{t}</b>"
+    if link:
+        href = esc(str(link))
+        t = f'<a href="{href}">{t}</a>'
+    return t
+
+def quill_to_flowables(delta_ops: List[Dict[str, Any]], styles) -> List[Any]:
+    """Convert Quill Delta to flowables (handles attrs on newline)."""
+    flow: List[Any] = []
+    line_buf = ""
+    bullet_buf: List[str] = []
+
+    def flush_bullets():
+        nonlocal bullet_buf
+        if bullet_buf:
+            items = [ListItem(Paragraph(x, styles['body'])) for x in bullet_buf]
+            flow.append(ListFlowable(items, bulletType='bullet', start='•', leftIndent=16))
+            bullet_buf = []
+
+    def emit_block(text: str, attrs: Dict[str, Any]):
+        header = attrs.get('header')
+        list_attr = coalesce_list_attr(attrs.get('list'))
+        if list_attr == 'bullet':
+            if text.strip():
+                bullet_buf.append(text.strip())
+            return
+        flush_bullets()
+        text = text.strip()
+        if not text:
+            flow.append(Spacer(1, 2)); return
+        if header == 1:
+            flow.append(Paragraph(text, styles['h1']))
+        elif header == 2:
+            flow.append(Paragraph(text, styles['h2']))
+        elif header == 3:
+            flow.append(Paragraph(text, styles['h3']))
         else:
-            flows.append(Paragraph(name, styles['NormalText']))
-        flows.append(Spacer(1, 4))
-    return flows
+            flow.append(Paragraph(text, styles['body']))
 
-def render_value(field_value, rich_text_ops, task_lookup, styles):
-    flows = []
+    for op in delta_ops:
+        ins = op.get('insert', '')
+        attrs = op.get('attributes', {}) or {}
+        if isinstance(ins, str) and ins != '\n':
+            if '\n' in ins:
+                parts = ins.split('\n')
+                for part in parts[:-1]:
+                    line_buf += _wrap_inline(part, attrs)
+                    emit_block(line_buf, {})
+                    line_buf = ""
+                line_buf += _wrap_inline(parts[-1], attrs)
+            else:
+                line_buf += _wrap_inline(ins, attrs)
+        elif ins == '\n':
+            emit_block(line_buf, attrs); line_buf = ""
+        else:
+            pass
 
-    # ✅ Always try to decode Quill JSON if it's provided as string
-    if isinstance(rich_text_ops, str):
+    if line_buf.strip():
+        emit_block(line_buf, {})
+    flush_bullets()
+    flow.append(Spacer(1, 4))
+    return flow
+
+def add_title_and_meta(story, task, styles):
+    title = task.get('name') or 'ClickUp Task'
+    url = task.get('url')
+    story.append(Paragraph(esc(title), styles['h1']))
+    if url:
+        story.append(Paragraph(f'<a href="{esc(url)}">{esc(url)}</a>', styles['link']))
+
+    owner_field = next((f for f in task.get('custom_fields', []) if f.get('name') == 'Owner of this VE'), None)
+    if owner_field and isinstance(owner_field.get('value'), list) and owner_field['value']:
+        owner = owner_field['value'][0].get('name', '')
+        owner_url = owner_field['value'][0].get('url')
+        if owner:
+            if owner_url:
+                story.append(Paragraph(f"<b>Owner:</b> <a href=\"{esc(owner_url)}\">{esc(owner)}</a>", styles['meta']))
+            else:
+                story.append(Paragraph(f"<b>Owner:</b> {esc(owner)}", styles['meta']))
+    story.append(Spacer(1, 8))
+
+def render_url_field(story, field: Dict[str, Any], styles, label: str = None):
+    if not field or not field.get('value'):
+        return
+    url = str(field.get('value'))
+    label = label or field.get('name') or 'Link'
+    story.append(Paragraph(esc(label), styles['h2']))
+    story.append(Paragraph(f'<a href="{esc(url)}">{esc(url)}</a>', styles['link']))
+    story.append(Spacer(1, 6))
+
+def render_relationship_field(story, field: Dict[str, Any], styles, level=3):
+    name = field.get('name', 'Related')
+    hdr_style = styles['h2'] if level == 2 else styles['h3']
+    story.append(Paragraph(esc(name), hdr_style))
+
+    vals = field.get('value')
+    if isinstance(vals, list) and len(vals) > 0:
+        items = []
+        for it in vals:
+            nm = it.get('name') or it.get('custom_id') or it.get('id')
+            url = it.get('url')
+            if nm:
+                if url:
+                    items.append(ListItem(Paragraph(f'<a href="{esc(url)}">{esc(nm)}</a>', styles['body'])))
+                else:
+                    items.append(ListItem(Paragraph(esc(nm), styles['body'])))
+        story.append(ListFlowable(items, bulletType='bullet', start='•', leftIndent=16) if items else Paragraph('—', styles['body']))
+    else:
+        story.append(Paragraph('not completed – please think about this', styles['warn']))
+    story.append(Spacer(1, 6))
+
+def _render_plain_with_md(story, text: str, styles):
+    """
+    Fallback renderer for plain text fields that contain lightweight markdown.
+    - Preserves blank lines as paragraph breaks.
+    - Supports **bold** and [text](url).
+    """
+    # Split on double newlines first for paragraph boundaries
+    blocks = []
+    raw_blocks = text.replace('\r\n', '\n').split('\n\n')
+    for blk in raw_blocks:
+        lines = [ln for ln in blk.split('\n')]  # keep single newlines as soft paragraphs
+        if len(lines) == 1:
+            blocks.append(lines[0])
+        else:
+            blocks.extend(lines)
+        blocks.append('')  # spacer after each block
+    if blocks and blocks[-1] == '':
+        blocks.pop()
+
+    for para in blocks:
+        if para.strip():
+            story.append(Paragraph(md_inline_to_html(para.strip()), styles['body']))
+        else:
+            story.append(Spacer(1, 4))
+    story.append(Spacer(1, 2))
+
+def add_field_rich_or_plain(story, field: Dict[str, Any], styles, level=2):
+    name = field.get('name', 'Text')
+    rich = field.get('value_richtext') or ''
+    plain = field.get('value') or ''
+
+    if not rich and not plain:
+        return
+
+    hdr_style = styles['h2'] if level == 2 else styles['h3']
+    story.append(Paragraph(esc(name), hdr_style)); story.append(Spacer(1, 2))
+
+    if rich:
         try:
-            parsed = json.loads(rich_text_ops)
-            ops = parsed.get("ops", [])
-            if ops:
-                flows.extend(render_quill_ops(ops, task_lookup, lambda l,u: make_button(l,u,styles), styles))
-                return flows
+            delta = json.loads(rich)
+            ops = delta.get('ops', [])
+            story.extend(quill_to_flowables(ops, styles))
+            return
         except Exception:
             pass
 
-    if isinstance(field_value, list) and field_value and isinstance(field_value[0], dict) and "name" in field_value[0]:
-        flows.extend(format_people(field_value, styles))
-        return flows
+    # Plain fallback with minimal markdown support
+    _render_plain_with_md(story, plain, styles)
 
-    if isinstance(field_value, dict) and "name" in field_value:
-        name = field_value.get("name", "")
-        url = field_value.get("url", "")
-        tid = resolve_id(field_value)
-        if url and tid:
-            flows.append(make_button(f"[{tid}] {name}", url, styles))
-        elif url:
-            flows.append(make_button(name, url, styles))
-        else:
-            flows.append(Paragraph(name, styles['NormalText']))
-        flows.append(Spacer(1, 4))
-        return flows
+def build_story(task: Dict[str, Any]):
+    styles = build_styles()
+    story = []
+    add_title_and_meta(story, task, styles)
 
-    if isinstance(field_value, str):
-        flows.append(Paragraph(urlify_text(field_value.strip(), task_lookup), styles['NormalText']))
-        return flows
+    fields = task.get('custom_fields', [])
+    by_name = {f.get('name'): f for f in fields}
 
-    flows.append(Paragraph(str(field_value), styles['NormalText']))
-    return flows
+    # Verbatim (Fathom) link if present
+    render_url_field(story, by_name.get('AI Recording URL'), styles, label='Verbatim recording')
+
+    # Related section (shows red warning if empty)
+    story.append(Paragraph('Related', styles['h2'])); story.append(Spacer(1, 2))
+    related_order = [
+        'Owner of this VE',
+        'Contributors to this value exchange',
+        'People identified as possible future contributors',
+        'Work Navigator',
+        'Wellbeing Mentor',
+    ]
+    for rname in related_order:
+        f = by_name.get(rname)
+        if f:
+            render_relationship_field(story, f, styles, level=3)
+
+    # Main rich/plain text sections
+    preferred = [
+        'AI Summary',
+        'Looking Back (Value Recognition)',  # this is the one that needed markdown fallback
+        'What is your mission?',
+        'Summary of Next Actions',
+        'Comments on VE Collaborators for this period',
+        'Comments on VE collaborators for next period',
+        'Time and Money',
+    ]
+    printed = set()
+    for name in preferred:
+        f = by_name.get(name)
+        if f and f.get('type') == 'text':
+            add_field_rich_or_plain(story, f, styles, level=2)
+            printed.add(name)
+
+    for f in fields:
+        if f.get('type') == 'text' and f.get('name') not in printed:
+            add_field_rich_or_plain(story, f, styles, level=3)
+
+    return story

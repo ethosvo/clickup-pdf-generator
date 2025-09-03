@@ -5,6 +5,7 @@
   "name": "Paul Sparkes Value Exchange for period 01012025 to 01092025",
   "text_content": "",
   "description": "",
+  "markdown_description": "",
   "status": {
     "id": "sc901208212623_MtH8wXBy",
     "status": "ready for vr",
@@ -14,7 +15,7 @@
   },
   "orderindex": "0.00000622000000000000000000000000",
   "date_created": "1741875800480",
-  "date_updated": "1756748220604",
+  "date_updated": "1756911724122",
   "date_closed": null,
   "date_done": null,
   "archived": false,
@@ -381,6 +382,44 @@
       },
       "date_created": "1744298967855",
       "hide_from_guests": false,
+      "value": [
+        {
+          "id": "869abu07u",
+          "name": "EY Senior Manager #2",
+          "status": "to do",
+          "color": "#87909e",
+          "custom_type": null,
+          "team_id": "20419954",
+          "deleted": false,
+          "url": "https://app.clickup.com/t/869abu07u",
+          "access": true,
+          "custom_id": "PERSON-20497"
+        },
+        {
+          "id": "869abtzyx",
+          "name": "EY senior manager #1",
+          "status": "to do",
+          "color": "#87909e",
+          "custom_type": null,
+          "team_id": "20419954",
+          "deleted": false,
+          "url": "https://app.clickup.com/t/869abtzyx",
+          "access": true,
+          "custom_id": "PERSON-20496"
+        },
+        {
+          "id": "8698ph1ax",
+          "name": "Robert Pye (Value Exchanger)",
+          "status": "to do",
+          "color": "#87909e",
+          "custom_type": null,
+          "team_id": "20419954",
+          "deleted": false,
+          "url": "https://app.clickup.com/t/8698ph1ax",
+          "access": true,
+          "custom_id": "PERSON-20361"
+        }
+      ],
       "required": false
     },
     {
@@ -409,6 +448,20 @@
       },
       "date_created": "1744299917117",
       "hide_from_guests": false,
+      "value": [
+        {
+          "id": "8698ph1ax",
+          "name": "Robert Pye (Value Exchanger)",
+          "status": "to do",
+          "color": "#87909e",
+          "custom_type": null,
+          "team_id": "20419954",
+          "deleted": false,
+          "url": "https://app.clickup.com/t/8698ph1ax",
+          "access": true,
+          "custom_id": "PERSON-20361"
+        }
+      ],
       "required": false
     },
     {
@@ -477,8 +530,8 @@
       "type_config": {},
       "date_created": "1739787728929",
       "hide_from_guests": false,
-      "value": "The VE shared just between Rob and Paul (Clickup Permissions set)\nPS: Looking back just this year... To the front of my mind. 8 months. polarises the - a lot of this is work based.  6 months.  Somewhat consumed by me covering someone else's role. 2x as busy. Properly swamped. Counting the weeks back from the 26 weeks.  Quite enjoyed it.  Time flew by reasonably well.  Roles were discrete but a little bit overlaps.  Learning about myself.  Looking forward to retiring even more! Busy doing mainly things I have done before. Overlay 1/2 way through that - found out my new role. Second half of year. Slightly more senior. ctrl-alt-delete. Dif network, influence, new battles. Influence. PS - expect it do be dynamic but realising is was 2.5 jobs. Summer had an extended break 5 weeks.  Found quite helpful.  Returned.  Breath of fresh air.  Most of old roles gone.  Week 3 starting to get to get to grips with.  Abstract?? Not really. Am I actually making any difference here. How to demonstrate credible value.  Not front line sales, delivery. Senior management. Given latitude. Genuinely trying to focus on the measures that matter.  Trying to influence 10-20 partners to do that. Self discovery.  God 22 months until \"technically\" I retire from my role.  Went to the office every day in first weeks.  Value recognition.  5 weeks off. 2 weeks off family in Cornwall. 18yrs+ Benefit as much in what you are NOT doing as well as what you are doing.  Walked 91 miles in 2 weeks!!! Some with wife or gold club. Found quite cathartic! Sometime when you get to serenity. What should I think about.  A whole bunch of life things.  'A' levels, future life plans.  Extension.  Holiday house.  Time wise.  What are you going to do.  Look back - shone a bright light.  Week is dictated. Cadence coffee + biscuits.  Should I be diarising things!! Perhaps not! Realising how condition I am.  Wife conditioned in a different way.  Don't need to plan 2 weeks in advance.  Something that sticks out.  Moving from old role to new roles in a bit of a business that is foreign territory to me.  Important to me that we would create an effective team.  Tried to execute my charm an influence about ho welcoming and supportive blown away by their response.  Share my ideas, invited them for them to do the same.  Makes it all feels worthwhile to me. I have been quite inspired by them. Positive feedback.  Always takes two to tango.  Renewed my faith in the values of the people. Previous roles. New the sharks they behaved in the way I thought would.  Teaming with people.  Their ability to listen and absorb. Playing back.  If that was the norm, it would have been too easy!! Alternatively it would be standing up in a web cast 1,000 people and managed to deliver.   \n",
-      "value_richtext": "{\"ops\":[{\"attributes\":{\"bold\":true},\"insert\":\"The VE shared just between Rob and Paul (Clickup Permissions set)\"},{\"attributes\":{\"block-id\":\"block-19196f31-ee61-41ff-a5c4-cb9e52ace07b\"},\"insert\":\"\\n\"},{\"insert\":\"PS: Looking back just this year... To the front of my mind. 8 months. polarises the - a lot of this is work based.  6 months.  Somewhat consumed by me covering someone else's role. 2x as busy. Properly swamped. Counting the weeks back from the 26 weeks.  Quite enjoyed it.  Time flew by reasonably well.  Roles were discrete but a little bit overlaps.  Learning about myself.  Looking forward to retiring even more! Busy doing mainly things I have done before. Overlay 1/2 way through that - found out my new role. Second half of year. Slightly more senior. ctrl-alt-delete. Dif network, influence, new battles. Influence. PS - expect it do be dynamic but realising is was 2.5 jobs. Summer had an extended break 5 weeks.  Found quite helpful.  Returned.  Breath of fresh air.  Most of old roles gone.  Week 3 starting to get to get to grips with.  Abstract?? Not really. Am I actually making any difference here. How to demonstrate credible value.  Not front line sales, delivery. Senior management. Given latitude. Genuinely trying to focus on the measures that matter.  Trying to influence 10-20 partners to do that. Self discovery.  God 22 months until \\\"technically\\\" I retire from my role.  Went to the office every day in first weeks.  Value recognition.  5 weeks off. 2 weeks off family in Cornwall. 18yrs+ Benefit as much in what you are NOT doing as well as what you are doing.  Walked 91 miles in 2 weeks!!! Some with wife or gold club. Found quite cathartic! Sometime when you get to serenity. What should I think about.  A whole bunch of life things.  'A' levels, future life plans.  Extension.  Holiday house.  Time wise.  What are you going to do.  Look back - shone a bright light.  Week is dictated. Cadence coffee + biscuits.  Should I be diarising things!! Perhaps not! Realising how condition I am.  Wife conditioned in a different way.  Don't need to plan 2 weeks in advance.  Something that sticks out.  Moving from old role to new roles in a bit of a business that is foreign territory to me.  Important to me that we would create an effective team.  Tried to execute my charm an influence about ho welcoming and supportive blown away by their response.  Share my ideas, invited them for them to do the same.  Makes it all feels worthwhile to me. I have been quite inspired by them. Positive feedback.  Always takes two to tango.  Renewed my faith in the values of the people. Previous roles. New the sharks they behaved in the way I thought would.  Teaming with people.  Their ability to listen and absorb. Playing back.  If that was the norm, it would have been too easy!! Alternatively it would be standing up in a web cast 1,000 people and managed to deliver.   \"},{\"attributes\":{\"block-id\":\"block-dc06e988-31fe-4846-8332-623f4a85a61a\"},\"insert\":\"\\n\"}]}",
+      "value": "The VE shared just between Rob and Paul (Clickup Permissions set)\nPS: Looking back just this year... To the front of my mind. 8 months. polarises the - a lot of this is work based.  \nFirst six  months.  Somewhat consumed by me covering someone else's role. 2x as busy. Properly swamped. Counting the weeks back from the 26 weeks.  Quite enjoyed it.  Time flew by reasonably well.  Roles were discrete but a little bit overlapped.  Learning about myself.  Looking forward to retiring even more! Busy doing mainly things I have done before. \n\nOverlay 1/2 way through that - found out my new role. Second half of year. Slightly more senior. ctrl-alt-delete. Dif network, influence, new battles. Influence. PS - expect it do be dynamic but realising is was 2.5 jobs. \n\nSummer had an extended break 5 weeks.  Found quite helpful.  Returned.  Breath of fresh air.  Most of old roles gone.  Week 3 starting to get to get to grips with.  Abstract?? Not really. Am I actually making any difference here. \nHow to demonstrate credible value.  Not front line sales, delivery. Senior management. Given latitude. Genuinely trying to focus on the measures that matter.  Trying to influence 10-20 partners to do that. Self discovery.  \n\nGot 22 months until \"technically\" I retire from my role.  Went to the office every day in first weeks.  \n\nValue recognition.  5 weeks off. 2 weeks off family in Cornwall. 18yrs+ Benefit as much in what you are NOT doing as well as what you are doing.  Walked 91 miles in 2 weeks!!! Some with wife or golf club. Found quite cathartic! Sometime when you get to serenity. What should I think about.  A whole bunch of life things.  'A' levels, future life plans.  Extension.  Holiday house.  Time wise.  What are you going to do.  Look back - shone a bright light.  \n\nA typical week is dictated. Cadence coffee + biscuits.  Should I be diarising things!! Perhaps not! Realising how conditioned I am.  Wife conditioned in a different way.  Don't need to plan 2 weeks in advance.  Something that sticks out.  Moving from old role to new roles in a bit of a business that is foreign territory to me.  Important to me that we would create an effective team.  Tried to execute my charm an influence.\n\nHow welcoming and supportive people were. Blown away by their response.  Share my ideas, invited them to do the same.  Makes it all feels worthwhile to me. I have been quite inspired by them. Positive feedback.  Always takes two to tango.  Renewed my faith in the values of the people. In previous roles, knew the sharks and they behaved in the way I thought they would.  Teaming with people.  Their ability to listen and absorb. Playing back.  If this was the norm, work / life EY would be too easy!! Alternatively value would be standing up in a web cast 1,000 people and managed to deliver.  Getting the words right.  But that's only about reading autocues! \n",
+      "value_richtext": "{\"ops\":[{\"attributes\":{\"bold\":true},\"insert\":\"The VE shared just between Rob and Paul (Clickup Permissions set)\"},{\"attributes\":{\"block-id\":\"block-19196f31-ee61-41ff-a5c4-cb9e52ace07b\"},\"insert\":\"\\n\"},{\"insert\":\"PS: Looking back just this year... To the front of my mind. 8 months. polarises the - a lot of this is work based.  \"},{\"attributes\":{\"block-id\":\"block-dc06e988-31fe-4846-8332-623f4a85a61a\"},\"insert\":\"\\n\"},{\"attributes\":{\"bold\":true},\"insert\":\"First six  months\"},{\"insert\":\".  Somewhat consumed by me covering someone else's role. 2x as busy. Properly swamped. Counting the weeks back from the 26 weeks.  Quite enjoyed it.  Time flew by reasonably well.  Roles were discrete but a little bit overlapped.  Learning about myself.  Looking forward to retiring even more! Busy doing mainly things I have done before. \"},{\"attributes\":{\"block-id\":\"block-5e35db03-ad96-44e0-a523-4e867841b401\"},\"insert\":\"\\n\"},{\"attributes\":{\"block-id\":\"block-abda4293-c91a-416a-ab1a-2cdf6502b2c5\"},\"insert\":\"\\n\"},{\"attributes\":{\"bold\":true},\"insert\":\"Overlay 1/2 way through that \"},{\"insert\":\"- found out my new role. Second half of year. Slightly more senior. ctrl-alt-delete. Dif network, influence, new battles. Influence. PS - expect it do be dynamic but realising is was 2.5 jobs. \"},{\"attributes\":{\"block-id\":\"block-4c3661d5-ff39-4211-8fa6-b1128509d09c\"},\"insert\":\"\\n\"},{\"attributes\":{\"block-id\":\"block-ebe53d35-1efe-4d99-92b3-9feaec358b6d\"},\"insert\":\"\\n\"},{\"attributes\":{\"bold\":true},\"insert\":\"Summer had an extended break 5 weeks.\"},{\"insert\":\"  Found quite helpful.  Returned.  Breath of fresh air.  Most of old roles gone.  Week 3 starting to get to get to grips with.  Abstract?? Not really. Am I actually making any difference here. \"},{\"attributes\":{\"block-id\":\"block-0cc5078d-a0d0-4bdf-b08f-c313c196a4fc\"},\"insert\":\"\\n\"},{\"insert\":\"How to demonstrate credible value.  Not front line sales, delivery. Senior management. Given latitude. Genuinely trying to focus on the measures that matter.  Trying to influence 10-20 partners to do that. Self discovery.  \"},{\"attributes\":{\"block-id\":\"block-05b709c1-a149-4692-aa84-32d1a11faae1\"},\"insert\":\"\\n\"},{\"attributes\":{\"block-id\":\"block-bb707ab7-f6be-4bbf-a72f-49d69f46cf29\"},\"insert\":\"\\n\"},{\"attributes\":{\"bold\":true},\"insert\":\"Got 22 months until \\\"technically\\\"\"},{\"insert\":\" I retire from my role.  Went to the office every day in first weeks.  \"},{\"attributes\":{\"block-id\":\"block-e32537f0-f301-4837-a2fc-f18a19f2bfbf\"},\"insert\":\"\\n\"},{\"attributes\":{\"block-id\":\"block-1726352f-f1c8-4699-bfc0-31f6285267ce\"},\"insert\":\"\\n\"},{\"attributes\":{\"bold\":true},\"insert\":\"Value recognition\"},{\"insert\":\".  5 weeks off. 2 weeks off family in Cornwall. 18yrs+ Benefit as much in what you are NOT doing as well as what you are doing.  Walked 91 miles in 2 weeks!!! Some with wife or golf club. Found quite cathartic! Sometime when you get to serenity. What should I think about.  A whole bunch of life things.  'A' levels, future life plans.  Extension.  Holiday house.  Time wise.  What are you going to do.  Look back - shone a bright light.  \"},{\"attributes\":{\"block-id\":\"block-7b24304b-f216-48b8-b3c2-1c3408319c00\"},\"insert\":\"\\n\"},{\"attributes\":{\"block-id\":\"block-83ec992d-5e0e-45b8-8df1-8ef64fbe1fa0\"},\"insert\":\"\\n\"},{\"attributes\":{\"bold\":true},\"insert\":\"A typical week is dictated.\"},{\"insert\":\" Cadence coffee + biscuits.  Should I be diarising things!! Perhaps not! Realising how conditioned I am.  Wife conditioned in a different way.  Don't need to plan 2 weeks in advance.  Something that sticks out.  Moving from old role to new roles in a bit of a business that is foreign territory to me.  Important to me that we would create an effective team.  Tried to execute my charm an influence.\"},{\"attributes\":{\"block-id\":\"block-bf29c9de-b40f-4606-9a4d-72a4e4675cbb\"},\"insert\":\"\\n\"},{\"attributes\":{\"block-id\":\"block-44e6d04b-84f8-4bf2-8888-9a85240df5bb\"},\"insert\":\"\\n\"},{\"attributes\":{\"bold\":true},\"insert\":\"How welcoming and supportive \"},{\"insert\":\"people were. Blown away by their response.  Share my ideas, invited them to do the same.  Makes it all feels worthwhile to me. I have been quite inspired by them. Positive feedback.  Always takes two to tango.  Renewed my faith in the values of the people. In previous roles, knew the sharks and they behaved in the way I thought they would.  Teaming with people.  Their ability to listen and absorb. Playing back.  If this was the norm, work / life EY would be too easy!! Alternatively value would be standing up in a web cast 1,000 people and managed to deliver.  Getting the words right.  But that's only about reading autocues! \"},{\"attributes\":{\"block-id\":\"block-ecd084e6-566d-46db-b44c-28a88bcd02e2\"},\"insert\":\"\\n\"}]}",
       "required": false
     },
     {
@@ -497,8 +550,8 @@
       "type_config": {},
       "date_created": "1739802594945",
       "hide_from_guests": false,
-      "value": "Who am I? My mission? Purpose? Last few months and few years? What's it all about professionally.  The value I have traded on is that people trust me. Keep asking me to do things.  To get stuff done. Charity - some of the stuff - people trust me to get stuff done.  Proud of that trust.  Measured on an hourly basis.  Content that is my mission. Next challenge is children and parents.  That is really hard. This is one of the biggest challenges I face. Quite profound.  My wife.  Mutual fulfillment. Transition. Don't want to spend life on golf course or garden.  A little bit nervous from an accumulator to a de-accumulator.  That beyond anything else.  Perhaps get a paper. \n",
-      "value_richtext": "{\"ops\":[{\"insert\":\"Who am I? My mission? Purpose? Last few months and few years? What's it all about professionally.  The value I have traded on is that people trust me. Keep asking me to do things.  To get stuff done. Charity - some of the stuff - people trust me to get stuff done.  Proud of that trust.  Measured on an hourly basis.  Content that is my mission. Next challenge is children and parents.  That is really hard. This is one of the biggest challenges I face. Quite profound.  My wife.  Mutual fulfillment. Transition. Don't want to spend life on golf course or garden.  A little bit nervous from an accumulator to a de-accumulator.  That beyond anything else.  Perhaps get a paper. \"},{\"attributes\":{\"block-id\":\"block-5b63c414-548a-438e-b698-7bf54b092ba5\"},\"insert\":\"\\n\"}]}",
+      "value": "Who am I? My mission? Purpose? Last few months and few years? \n\nWhat's it all about professionally?  The value I have traded on is that people trust me. Keep asking me to do things.  To get stuff done. \nCharity - some of the stuff - people trust me to get stuff done.  Proud of that trust.  \nMeasured on an hourly basis.  Content that is my mission. Next challenge is children and parents.  That is really hard. \nThis is one of the biggest challenges I face. Quite profound.  My wife.  Mutual fulfillment. Transition. Don't want to spend life on golf course or garden.  \nA little bit nervous from an accumulator to a de-accumulator.  That beyond anything else.  Perhaps get a paper round?\n",
+      "value_richtext": "{\"ops\":[{\"insert\":\"Who am I? My mission? Purpose? Last few months and few years? \"},{\"attributes\":{\"block-id\":\"block-5b63c414-548a-438e-b698-7bf54b092ba5\"},\"insert\":\"\\n\"},{\"attributes\":{\"block-id\":\"block-2e6c795c-1d91-49d9-b955-8b69672c81ac\"},\"insert\":\"\\n\"},{\"insert\":\"What's it all about professionally?  The value I have traded on is that people trust me. Keep asking me to do things.  To get stuff done. \"},{\"attributes\":{\"block-id\":\"block-20caf901-c5b4-48cc-ac41-0854c68edda5\",\"list\":{\"list\":\"bullet\"}},\"insert\":\"\\n\"},{\"insert\":\"Charity - some of the stuff - people trust me to get stuff done.  Proud of that trust.  \"},{\"attributes\":{\"block-id\":\"block-4b247102-208a-4193-9fc6-f92ff47b1d00\",\"list\":{\"list\":\"bullet\"}},\"insert\":\"\\n\"},{\"insert\":\"Measured on an hourly basis.  Content that is my mission. Next challenge is children and parents.  That is really hard. \"},{\"attributes\":{\"block-id\":\"block-8b45b939-c45a-4a6a-bf63-92aac70f2391\",\"list\":{\"list\":\"bullet\"}},\"insert\":\"\\n\"},{\"insert\":\"This is one of the biggest challenges I face. Quite profound.  My wife.  Mutual fulfillment. Transition. Don't want to spend life on golf course or garden.  \"},{\"attributes\":{\"block-id\":\"block-65d46fdc-a116-4ac2-b75b-35a349d72792\",\"list\":{\"list\":\"bullet\"}},\"insert\":\"\\n\"},{\"insert\":\"A little bit nervous from an accumulator to a de-accumulator.  That beyond anything else.  Perhaps get a paper round?\"},{\"attributes\":{\"block-id\":\"block-c8257ee1-e6fb-4db1-8748-12f020430b65\",\"list\":{\"list\":\"bullet\"}},\"insert\":\"\\n\"}]}",
       "required": false
     },
     {

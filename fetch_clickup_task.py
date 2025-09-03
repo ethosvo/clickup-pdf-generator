@@ -2,7 +2,6 @@ import os
 import json
 import requests
 from dotenv import load_dotenv
-from urllib.parse import urlparse
 
 # Load API key from .env
 load_dotenv()
@@ -24,13 +23,18 @@ def extract_task_id(url):
 
 task_short_id = extract_task_id(task_url)
 
-# Step 2: Find the real task ID via the API (ClickUp task keys like "PERSON-20467" are short links)
+# Step 2: Find the real task ID via the API
 headers = {
     "Authorization": API_KEY
 }
 
 search_endpoint = "https://api.clickup.com/api/v2/task"
-params = {"custom_task_ids": "true", "team_id": "20419954"}
+
+params = {
+    "custom_task_ids": "true",
+    "team_id": "20419954",
+    "include_markdown_description": "true"  # ✅ ensures markdown comes back
+}
 
 # Construct full URL using short task key
 task_detail_url = f"{search_endpoint}/{task_short_id}"
