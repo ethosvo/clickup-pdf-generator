@@ -12,7 +12,7 @@ if not API_KEY:
     raise ValueError("Missing CLICKUP_API_KEY in .env file")
 
 # Hardcoded ClickUp task URL (example)
-task_url = "https://app.clickup.com/t/20419954/PERSON-20467"
+task_url = "https://app.clickup.com/t/20419954/PERSON-20340"
 
 # Step 1: Extract ClickUp task ID from the URL
 def extract_task_id(url):

@@ -8,7 +8,7 @@ def resolve_id(obj: dict) -> str:
 
 def make_button(label: str, url: str, styles):
     p = Paragraph(f"<a href='{url}'>{label}</a>", styles['ButtonLink'])
-    return KeepInFrame(maxWidth=220, maxHeight=40, content=[p], hAlign='LEFT', mode='shrink')
+    return KeepInFrame(maxWidth=400, maxHeight=40, content=[p], hAlign='LEFT', mode='shrink')
 
 def format_people(people_list, styles):
     flows = []
