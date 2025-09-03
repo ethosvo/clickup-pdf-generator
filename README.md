@@ -10,7 +10,6 @@ It renders task references as **button-like links** and maintains proper styling
 ## 🔧 Project Structure
 
 ```text
-
 clickup-pdf-generator/
 │
 ├── fetch_clickup_task.py   # Fetch task JSON via ClickUp API (with markdown_description)
@@ -21,7 +20,6 @@ clickup-pdf-generator/
 ├── utils.py                # Helpers: regex, filenames, URL parsing
 ├── task_data.json          # Example input (ClickUp export)
 └── README.md
-
 ```
 
 ## 🚀 Usage
