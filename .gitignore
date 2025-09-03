@@ -9,6 +9,8 @@ ENV/
 env/
 .venv/
 *.env
+*.pdf
+*.json
 
 # VS Code settings
 .vscode/
