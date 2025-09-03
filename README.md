@@ -8,6 +8,8 @@ It renders task references as **button-like links** and maintains proper styling
 ---
 
 ## 🔧 Project Structure
+
+```text
 clickup-pdf-generator/
 │
 ├── fetch_clickup_task.py   # Fetch task JSON via ClickUp API (with markdown_description)
@@ -18,29 +20,25 @@ clickup-pdf-generator/
 ├── utils.py                # Helpers: regex, filenames, URL parsing
 ├── task_data.json          # Example input (ClickUp export)
 └── README.md
-
----
+```
 
 ## 🚀 Usage
 
 1. Set your ClickUp API key in `.env`:
-   ```env
+   
    CLICKUP_API_KEY=your_api_key_here
-   ```
-
+   
 2. Edit `fetch_clickup_task.py` with your task URL and run to fetch JSON:
-   ```bash
+   
    python fetch_clickup_task.py
-   ```
-
+   
    This will create `task_data.json`.  
    ✅ Includes `markdown_description` thanks to `include_markdown_description=true`.
 
 3. Generate a PDF from the JSON:
-   ```bash
+   
    python generate_pdf.py
-   ```
-
+   
    The script generates a PDF named after the task (safe filename).
 
 ---
