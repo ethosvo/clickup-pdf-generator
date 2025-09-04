@@ -5,8 +5,8 @@ from typing import Any, Dict, List
 from reportlab.platypus import Paragraph, Spacer, ListFlowable, ListItem
 from reportlab.lib.units import inch
 
-from styles import build_styles
-from utils import esc, coalesce_list_attr, md_inline_to_html
+from pdf_generator.styles import build_styles
+from pdf_generator.utils import esc, coalesce_list_attr, md_inline_to_html
 
 def _wrap_inline(text: str, attrs: Dict[str, Any]) -> str:
     """Apply inline formatting supported by ReportLab (<b>, <i>, <a>)."""

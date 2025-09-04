@@ -15,7 +15,10 @@ import requests
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.platypus import SimpleDocTemplate
-from renderers import build_story
+
+# --- FIXED PROJECT IMPORTS ---
+from pdf_generator.renderers import build_story
+
 
 # --------------------------------------------------------------------------------------
 # Parsing & API helpers
