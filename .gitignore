@@ -11,6 +11,7 @@ env/
 *.env
 *.pdf
 *.json
+outputs/
 
 # VS Code settings
 .vscode/
