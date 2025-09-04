@@ -1,7 +1,7 @@
 import json
 from reportlab.platypus import Paragraph, Spacer, Image
 from reportlab.lib.units import inch
-from utils import urlify_text, TASK_BRACKET_RE, TASK_ANY_URL_RE
+from pdf_generator.utils import urlify_text, TASK_BRACKET_RE, TASK_ANY_URL_RE
 
 def build_lookup_from_richtext(custom_fields, task_lookup: dict):
     """Scan all value_richtext fields to index task mentions and link texts by id OR custom id."""

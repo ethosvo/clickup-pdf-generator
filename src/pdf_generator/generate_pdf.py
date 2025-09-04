@@ -7,7 +7,7 @@ from pathlib import Path
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.platypus import SimpleDocTemplate
-from renderers import build_story
+from pdf_generator.renderers import build_story
 
 def main():
     ap = argparse.ArgumentParser(description="Generate formatted PDF from ClickUp JSON.")
