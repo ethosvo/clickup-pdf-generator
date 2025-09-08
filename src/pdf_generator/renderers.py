@@ -272,6 +272,31 @@ def build_story(task: Dict[str, Any]):
         if f:
             render_relationship_field(story, f, styles, level=3)
 
+
+    # Checklists
+    cl = task.get('checklists') or []
+    if cl:
+        story.append(Spacer(1, 8))
+        story.append(Paragraph('Checklists', styles['h2']))
+        story.append(Spacer(1, 2))
+        for clist in cl:
+            items = clist.get('items') or []
+            # Always show the checklist name; even if empty, note it.
+            title = clist.get('name') or 'Checklist'
+            resolved = clist.get('resolved') or 0
+            unresolved = clist.get('unresolved') or 0
+            subtitle = f"{title} ({resolved}/{resolved+unresolved} done)" if (resolved or unresolved) else title
+            story.append(Paragraph(subtitle, styles['h3']))
+            if items:
+                bullets = []
+                for it in items:
+                    mark = '[x]' if it.get('resolved') else '[ ]'
+                    txt = esc(it.get('name') or '')
+                    bullets.append(ListItem(Paragraph(f"{mark} {txt}", styles['body'])))
+                story.append(ListFlowable(bullets, bulletType='bullet', start='•', leftIndent=18))
+            else:
+                story.append(Paragraph('No items.', styles['warn']))
+            story.append(Spacer(1, 6))
     # Main rich/plain text sections
     preferred = [
         'AI Summary',
